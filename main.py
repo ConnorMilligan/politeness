@@ -42,12 +42,19 @@ supported_corpora = ["wiki-corpus", "reddit-corpus-small", "conversations-gone-a
 dataFolder = "data/"
 
 def get_politeness_score(utt):
+    # Take each politeness feature and multiply it by its weight, then sum all the values
     score = sum([utt.meta["politeness_strategies"].get(politeness_feature, 0) * weight for politeness_feature, weight in politeness_features.items()])
     
-    max_score = sum(abs(weight) for weight in politeness_features.values())
-    min_score = -max_score
+    # Sum of absolute weights
+    abs_weights_sum = sum(abs(weight) for weight in politeness_features.values())
     
-    normalized_score = 2 * (score - min_score) / (max_score - min_score) - 1
+    # Scale the score based on the sum of absolute weights
+    # Avoid division by zero
+    if abs_weights_sum == 0:
+        normalized_score = 0
+    else:
+        normalized_score = score / abs_weights_sum
+    
     return normalized_score
 
 def main():
@@ -66,7 +73,7 @@ def main():
     start_time = time.time()
 
     print("Loading corpus...")
-    corpus = Corpus(filename=download(corpus_name))#, utterance_end_index=5000)
+    corpus = Corpus(filename=download(corpus_name), utterance_end_index=2000)
 
     print("Transforming corpus...")
     parser = TextParser(verbosity=1000)
@@ -107,7 +114,7 @@ def main():
             # repeat the same process for the most negative utterances
             if len(most_negative) < 5 or curr_score < list(most_negative.keys())[0]:
                 most_negative[curr_score] = utt.text
-                most_negative = dict(sorted(most_negative.items()))
+                most_negative = dict(sorted(most_negative.items(), reverse=True))
 
                 if len(most_negative) > 5:
                     most_negative.pop(list(most_negative.keys())[0])
