@@ -1,0 +1,27 @@
+\begin{tikzpicture}
+    \begin{axis}[
+        ybar,
+        ymin=0,
+        ylabel={Utterences using Strategy\%},
+        xlabel={Politeness Strategy},
+        title={Frequency of Politeness Strategies in CGA on Reddit \& Wikipedia Talk},
+        symbolic x coords={Please, Please start, HASHEDGE, Indirect (btw), Hedges, Factuality, Deference, Gratitude, Apologizing, 1st person pl., 1st person, 1st person start, 2nd person, 2nd person start, Indirect (greeting), Direct question, Direct start, HASPOSITIVE, HASNEGATIVE, SUBJUNCTIVE, INDICATIVE},
+        xtick=data,
+        ymajorgrids=true,
+        enlarge x limits=0.05,
+        width=0.9\textwidth,
+        height=0.6\textwidth,
+        legend style={at={(0.20,0.98)},anchor=north,legend columns=-1},
+        xticklabel style={rotate=45,anchor=north east},
+        xticklabel style={font=\footnotesize}, % Optional: Adjust font size
+        bar width=3pt
+    ]
+    \addplot coordinates {
+        (Please,4.29)(Please start,4.11)(HASHEDGE,45.79)(Indirect (btw),0.38)(Hedges,22.61)(Factuality,11.91)(Deference,0.94)(Gratitude,4.91)(Apologizing,2.04)(1st person pl.,17.98)(1st person,37.21)(1st person start,33.45)(2nd person,37.53)(2nd person start,11.01)(Indirect (greeting),1.29)(Direct question,10.03)(Direct start,16.13)(HASPOSITIVE,57.64)(HASNEGATIVE,55.69)(SUBJUNCTIVE,1.02)(INDICATIVE,0.91)
+    };
+    \addplot coordinates {
+        (Please,1.15)(Please start,0.95)(HASHEDGE,57.62)(Indirect (btw),0.05)(Hedges,31.33)(Factuality,21.74)(Deference,0.55)(Gratitude,1.2)(Apologizing,1.45)(1st person pl.,28.04)(1st person,43.03)(1st person start,35.98)(2nd person,59.42)(2nd person start,20.89)(Indirect (greeting),0.15)(Direct question,20.54)(Direct start,28.84)(HASPOSITIVE,74.91)(HASNEGATIVE,74.16)(SUBJUNCTIVE,2.55)(INDICATIVE,1.9)
+    };
+    \legend{Wikipedia Talk, Reddit}
+    \end{axis}
+\end{tikzpicture}
